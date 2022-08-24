@@ -34,8 +34,6 @@ const ErrorMsg = styled.div`
 `;
 
 function EmailComponent() {
-  const URL = process.env.REACT_APP_API_URL;
-
   const userEmail = 'example@example.com';
 
   const [emailInput, setEmailInput] = useState(userEmail);
@@ -59,8 +57,8 @@ function EmailComponent() {
     else if (!isValidEmail(emailInput)) setErrMsg('이메일 형식이 올바르지 않습니다.');
     else {
       axios
-        .patch(
-          `${URL}/users/email/auth`,
+        .post(
+          `/email`,
           { email: emailInput },
           {
             headers: {
