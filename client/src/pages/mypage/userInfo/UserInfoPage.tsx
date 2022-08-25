@@ -34,7 +34,7 @@ const RightTd = styled.td`
 
 function UserInfoPage() {
   const userInformation = {
-    email: 'example@example.com',
+    email: process.env.REACT_APP_USER_EMAIL,
     name: '테스트',
     mobile: '01012341234',
     password: 'qwer1234',
@@ -57,7 +57,7 @@ function UserInfoPage() {
         <button type="button" onClick={handleEmailComClick}>
           {emailCom ? '이메일 변경취소' : '이메일 변경'}
         </button>
-        {emailCom ? <EmailComponent /> : null}
+        {emailCom ? <EmailComponent userEmail={userInfo.email || ''} /> : null}
       </div>
     ),
     이름: userInfo.name,

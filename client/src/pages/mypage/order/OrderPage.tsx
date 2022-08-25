@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 import { orderList } from '../../../database/orderList';
 
 const OrderWrapper = styled.div`
@@ -29,7 +29,15 @@ const ItemContainer = styled.div`
   margin-bottom: 1rem;
   padding: 0.75rem;
 `;
-
+/*
+  startDate : datetime
+  endDate : datetime
+  type: string
+  content: string
+  orderType: string
+  paymentType: string
+  orderStatus: string
+*/
 function OrderPage() {
   const allOrders = orderList;
   const [displayOrder, setDisplayOrder] = useState(allOrders);

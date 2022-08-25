@@ -91,7 +91,7 @@ function PasswordComponent() {
       axios
         .patch(
           `${URL}/users/password`,
-          { email: 'totw2022@naver.com', password: curPassword, updatePassword: newPassword },
+          { email: process.env.REACT_APP_USER_EMAIL, password: curPassword, updatePassword: newPassword },
           {
             headers: {
               // Authorization: `Bearer ${token}`,
