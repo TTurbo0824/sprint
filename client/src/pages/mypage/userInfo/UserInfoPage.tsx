@@ -68,11 +68,17 @@ const EditBnt = styled.button`
   margin-right: 0.75rem;
 `;
 
+const WithdrawContainer = styled.div`
+  padding: 1rem 0.5rem;
+`;
+
 export const UserInfoBnt = styled.button`
   width: 100%;
   height: 2.5rem;
   margin-top: 0.75rem;
 `;
+
+const Guide = styled.span``;
 
 function UserInfoPage() {
   const userInformation = {
@@ -98,6 +104,7 @@ function UserInfoPage() {
     아이디수정: emailCom ? <EmailComponent userEmail={userInfo.email || ''} /> : null,
     '휴대폰 번호': userInfo.mobile,
   };
+
   const handleUnavailClick = () => {
     alert('현재 서비스 중인 기능이 아닙니다.');
   };
@@ -144,8 +151,10 @@ function UserInfoPage() {
         </InnerContainer>
         <InnerContainer>
           <Title>회원탈퇴</Title>
-          회원탈퇴를 원하시면 아래 버튼을 클릭해주세요.
-          <UserInfoBnt>탈퇴하기</UserInfoBnt>
+          <WithdrawContainer>
+            <Guide>회원탈퇴를 원하시면 아래 버튼을 클릭해주세요.</Guide>
+            <UserInfoBnt onClick={handleUnavailClick}>탈퇴하기</UserInfoBnt>
+          </WithdrawContainer>
         </InnerContainer>
       </InfoContainer>
     </WrapperDiv>
