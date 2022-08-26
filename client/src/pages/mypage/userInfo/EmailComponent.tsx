@@ -7,23 +7,23 @@ const EmailWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  background-color: lightgray;
-  margin: 1rem auto 0.25rem;
-  padding: 0.6rem;
+  padding-right: 0.75rem;
+`;
+
+const Guide = styled.span`
+  color: gray;
+  margin-bottom: 0.5rem;
 `;
 
 const EmailInput = styled.input`
-  width: 13rem;
-  margin-right: 0.25rem;
-  height: 1.5rem;
+  width: 100%;
+  height: 2.25rem;
+  margin-bottom: 0.25rem;
 `;
 
 const AuthBnt = styled.button`
-  background-color: skyblue;
-  color: white;
-  border: none;
-  padding: 0.25rem 0.5rem;
-  height: 1.5rem;
+  width: 100%;
+  height: 2.25rem;
 `;
 
 const ErrorMsg = styled.div`
@@ -37,7 +37,6 @@ const Msg = styled.div`
   width: 100%;
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
-  white-space: pre-line;
 `;
 
 type EmailProp = {
@@ -45,7 +44,7 @@ type EmailProp = {
 };
 
 function EmailComponent({ userEmail }: EmailProp) {
-  const [emailInput, setEmailInput] = useState(userEmail);
+  const [emailInput, setEmailInput] = useState('');
   const [validInput, setValidInput] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -130,15 +129,19 @@ function EmailComponent({ userEmail }: EmailProp) {
     <EmailWrapper>
       {!isEmailSent ? (
         <>
-          <EmailInput onChange={(e) => handleInput(e, 'email')} value={emailInput} />
+          <Guide>이메일 변경을 위해서 인증이 필요합니다.</Guide>
+          <EmailInput
+            onChange={(e) => handleInput(e, 'email')}
+            value={emailInput}
+            placeholder="변경할 이메일을 입력하세요."
+          />
           <AuthBnt onClick={handleAuthBntClick}>인증메일 전송</AuthBnt>
           <ErrorMsg style={{ display: !errMsg ? 'none' : 'block' }}>{errMsg}</ErrorMsg>
         </>
       ) : (
         <>
           <Msg>
-            신청하신 이메일(<span style={{ color: 'blue', fontWeight: 'bold' }}>{emailInput}</span>)로 인증 이메일이
-            발송되었습니다.{'\n'}
+            <span style={{ color: 'blue', fontWeight: 'bold' }}>{emailInput}</span>(으)로 인증 이메일이 발송되었습니다.
             이메일로 받으신 인증번호를 아래 입력창에 입력하신 뒤 확인 버튼을 클릭하시면 이메일 변경이 완료됩니다.
           </Msg>
           <EmailInput onChange={(e) => handleInput(e, 'validator')} value={validInput} />

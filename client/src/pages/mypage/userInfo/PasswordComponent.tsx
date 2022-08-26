@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import axios from 'axios';
+import { UserInfoBnt } from './UserInfoPage';
 
-const PasswordTable = styled.table`
+const PasswordContainer = styled.div`
+  padding: 1rem 0.5rem;
   .hidden {
     display: none;
   }
@@ -15,29 +17,20 @@ const PasswordTable = styled.table`
   .passed {
     color: green;
   }
-  th {
-    vertical-align: top;
-    font-weight: normal;
-    text-align: left;
-    width: 8rem;
-    padding-top: 0.4rem;
-  }
 `;
 
 const PasswordInput = styled.input`
-  width: 9rem;
-  height: 1.5rem;
+  width: 100%;
+  height: 2.25rem;
   border: 1px solid darkgray;
   margin-bottom: 0.25rem;
+  :not(:first-of-type) {
+    margin-top: 0.6rem;
+  }
 `;
 
 const PasswordErrorMsg = styled.div`
   line-height: 1.2rem;
-`;
-
-const PasswordEditBnt = styled.button`
-  margin: 0.75rem 0;
-  padding: 0.25rem 0.5rem;
 `;
 
 function PasswordComponent() {
@@ -307,67 +300,50 @@ function PasswordComponent() {
   // console.log(!bntClicked, passwordErr.curEqual, !passwordErr.curNotEmpty);
 
   return (
-    <PasswordTable>
-      <tbody>
-        <tr>
-          <th>현재 비밀번호</th>
-          <td>
-            <PasswordInput onChange={(e) => handleInput(e, 'curPassword')} />
-            <PasswordErrorMsg className={!bntClicked || passwordErr.curNotEmpty ? 'hidden' : 'error'}>
-              현재 비밀번호를 입력해주세요
-            </PasswordErrorMsg>
-            <PasswordErrorMsg
-              className={!bntClicked || passwordErr.curEqual || !passwordErr.curNotEmpty ? 'hidden' : 'error'}
-            >
-              현재 비밀번호가 일치하지 않습니다.
-            </PasswordErrorMsg>
-          </td>
-        </tr>
-        <tr>
-          <th>새 비밀번호</th>
-          <td>
-            <PasswordInput onChange={(e) => handleInput(e, 'newPassword')} onClick={() => handleInputClick('new')} />
-            <PasswordErrorMsg className={handleClassName('passwordMix')}>
-              <span>{!passwordErr.isMixed ? '×' : '✓'}</span> 영문/숫자/특수문자 2가지 이상 조합 (8~20자)
-            </PasswordErrorMsg>
-            <PasswordErrorMsg className={handleClassName('passwordRepeat')}>
-              {!passwordErr.isNotRepeat ? '×' : '✓'} 3개 이상 연속되거나 동일한 문자/숫자 제외
-            </PasswordErrorMsg>
-            <PasswordErrorMsg className={handleClassName('passwordId')}>
-              {!passwordErr.isNotId ? '×' : '✓'} 아이디(이메일) 제외
-            </PasswordErrorMsg>
-            <PasswordErrorMsg
-              className={passwordErr.isMixed && passwordErr.isNotRepeat && passwordErr.isNotId ? 'passed' : 'hidden'}
-            >
-              ✓ 사용 가능한 비밀번호입니다.
-            </PasswordErrorMsg>
-          </td>
-        </tr>
-        <tr>
-          <th>비밀번호 다시 입력</th>
-          <td>
-            <PasswordInput
-              onChange={(e) => handleInput(e, 'passwordRetype')}
-              onClick={() => handleInputClick('retype')}
-            />
-            <PasswordErrorMsg className={handleClassName('retypeTyped')}>
-              × 확인을 위해 새 비밀번호를 다시 입력해주세요.
-            </PasswordErrorMsg>
-            <PasswordErrorMsg className={handleClassName('retypeEqual')}>
-              {passwordErr.reEqual ? '✓ 새 비밀번호가 일치합니다.' : '× 새 비밀번호가 일치하지 않습니다.'}
-            </PasswordErrorMsg>
-          </td>
-        </tr>
-        <tr>
-          <td />
-          <td>
-            <PasswordEditBnt type="button" onClick={handleEditBntClick}>
-              비밀번호 변경
-            </PasswordEditBnt>
-          </td>
-        </tr>
-      </tbody>
-    </PasswordTable>
+    <PasswordContainer>
+      <PasswordInput placeholder="현재 비밀번호를 입력하세요." onChange={(e) => handleInput(e, 'curPassword')} />
+      <PasswordErrorMsg className={!bntClicked || passwordErr.curNotEmpty ? 'hidden' : 'error'}>
+        현재 비밀번호를 입력해주세요
+      </PasswordErrorMsg>
+      <PasswordErrorMsg
+        className={!bntClicked || passwordErr.curEqual || !passwordErr.curNotEmpty ? 'hidden' : 'error'}
+      >
+        현재 비밀번호가 일치하지 않습니다.
+      </PasswordErrorMsg>
+      <PasswordInput
+        placeholder="새 비밀번호를 입력하세요."
+        onChange={(e) => handleInput(e, 'newPassword')}
+        onClick={() => handleInputClick('new')}
+      />
+      <PasswordErrorMsg className={handleClassName('passwordMix')}>
+        <span>{!passwordErr.isMixed ? '×' : '✓'}</span> 영문/숫자/특수문자 2가지 이상 조합 (8~20자)
+      </PasswordErrorMsg>
+      <PasswordErrorMsg className={handleClassName('passwordRepeat')}>
+        {!passwordErr.isNotRepeat ? '×' : '✓'} 3개 이상 연속되거나 동일한 문자/숫자 제외
+      </PasswordErrorMsg>
+      <PasswordErrorMsg className={handleClassName('passwordId')}>
+        {!passwordErr.isNotId ? '×' : '✓'} 아이디(이메일) 제외
+      </PasswordErrorMsg>
+      <PasswordErrorMsg
+        className={passwordErr.isMixed && passwordErr.isNotRepeat && passwordErr.isNotId ? 'passed' : 'hidden'}
+      >
+        ✓ 사용 가능한 비밀번호입니다.
+      </PasswordErrorMsg>
+      <PasswordInput
+        placeholder="새 비밀번호를 한번 더 확인해주세요."
+        onChange={(e) => handleInput(e, 'passwordRetype')}
+        onClick={() => handleInputClick('retype')}
+      />
+      <PasswordErrorMsg className={handleClassName('retypeTyped')}>
+        × 확인을 위해 새 비밀번호를 다시 입력해주세요.
+      </PasswordErrorMsg>
+      <PasswordErrorMsg className={handleClassName('retypeEqual')}>
+        {passwordErr.reEqual ? '✓ 새 비밀번호가 일치합니다.' : '× 새 비밀번호가 일치하지 않습니다.'}
+      </PasswordErrorMsg>
+      <UserInfoBnt type="button" onClick={handleEditBntClick}>
+        비밀번호 변경
+      </UserInfoBnt>
+    </PasswordContainer>
   );
 }
 
