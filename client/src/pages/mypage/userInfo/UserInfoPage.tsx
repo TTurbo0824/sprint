@@ -15,6 +15,7 @@ const WrapperDiv = styled.div`
   padding: 2rem 1.25rem;
   border: 1px solid lightgray;
   font-size: 0.9rem;
+  overflow-y: scroll;
 `;
 
 const InfoContainer = styled.section``;
@@ -82,12 +83,9 @@ const Guide = styled.span``;
 
 function UserInfoPage() {
   const userInformation = {
-    email: process.env.REACT_APP_USER_EMAIL,
     name: '테스트',
+    email: process.env.REACT_APP_USER_EMAIL,
     mobile: '01012341234',
-    password: 'qwer1234',
-    address: '경기 성남시 분당구 탄청상로151번길 20 월드쇼핑 A동 4층',
-    zipCode: '13636',
   };
 
   const [userInfo, setUserInfo] = useState(userInformation);

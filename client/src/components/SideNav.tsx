@@ -23,6 +23,7 @@ const Menu = styled.li`
 function SideNav() {
   const navObj: { [key: string]: string } = {
     userInfo: '회원 정보',
+    address: '배송지 관리',
     order: '주문 관리',
     review: '리뷰 관리',
     inquiry: '문의 관리',
