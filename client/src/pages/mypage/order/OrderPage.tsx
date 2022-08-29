@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { orderList } from '../../../database/orderList';
+import OrderSetting from './OrderSetting';
 
 const OrderWrapper = styled.div`
   width: 100%;
@@ -8,7 +9,20 @@ const OrderWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  padding: 1rem;
+  width: 480px;
+  height: 800px;
+  margin: 0 auto;
+  border: 1px solid lightgray;
+  font-size: 0.9rem;
+  overflow-y: scroll;
+`;
+
+const SettingContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: lightgray;
 `;
 
 const FieldContainer = styled.div`
@@ -29,29 +43,40 @@ const ItemContainer = styled.div`
   margin-bottom: 1rem;
   padding: 0.75rem;
 `;
-/*
-  startDate : datetime
-  endDate : datetime
-  type: string
-  content: string
-  orderType: string
-  paymentType: string
-  orderStatus: string
-*/
+
 function OrderPage() {
   const allOrders = orderList;
   const [displayOrder, setDisplayOrder] = useState(allOrders);
+  const [settingOpen, setSettingOpen] = useState(false);
 
   const fields = ['전체', '배송/방문수령', '배달/픽업', '예약'];
+
+  const timeOptions = ['3개월', '6개월', '9개월', '12개월'];
 
   const handleType = (type: string) => {
     if (type === '전체') setDisplayOrder(allOrders);
     else setDisplayOrder(allOrders.filter((order) => order.type === type));
   };
 
+  const handleOpenSetting = () => {
+    if (settingOpen) setSettingOpen(false);
+    else setSettingOpen(true);
+  };
+
   return (
     <OrderWrapper>
-      Order page
+      나의 주문내역
+      {settingOpen ? <OrderSetting handleOpenSetting={handleOpenSetting} /> : null}
+      <SettingContainer>
+        <select>
+          {timeOptions.map((option) => (
+            <option key={option}>최근 {option}</option>
+          ))}
+        </select>
+        <button type="button" onClick={handleOpenSetting}>
+          상세조회+
+        </button>
+      </SettingContainer>
       <FieldContainer>
         {fields.map((field) => (
           <Field key={field} onClick={() => handleType(field)}>
