@@ -69,30 +69,33 @@ function EmailComponent({ userEmail }: EmailProp) {
     else if (!isValidEmail(emailInput)) setErrMsg('이메일 형식이 올바르지 않습니다.');
     else {
       console.log('sent');
-      setIsEmailSent(true);
-      setValidNum('123456');
-      setErrMsg('');
-      // axios
-      //   .post(
-      //     '/api/email/auth',
-      //     { email: emailInput },
-      //     {
-      //       headers: {
-      //         // Authorization: `Bearer ${token}`,
-      //         'Content-Type': 'application/json',
-      //       },
-      //     },
-      //   )
-      //   .then((res) => {
-      //     if (res.status === 200) {
-      //       setIsEmailSent(true);
-      //       setErrMsg('');
-      //       setValidNum(res.data.data.valid_num)
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     alert(error);
-      //   });
+      // TEST CODE
+      // setIsEmailSent(true);
+      // setValidNum('123456');
+      // setErrMsg('');
+
+      // kyungjoo_ha@tmax.co.kr
+      axios
+        .post(
+          '/api/email',
+          { email: emailInput },
+          {
+            headers: {
+              // Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            setIsEmailSent(true);
+            setErrMsg('');
+            setValidNum(res.data.validNum);
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
     }
   };
 
@@ -102,26 +105,27 @@ function EmailComponent({ userEmail }: EmailProp) {
     } else if (validInput !== validNum) {
       setErrMsg('잘못된 인증번호입니다.');
     } else {
-      window.location.reload();
-      // axios
-      //   .patch(
-      //     '/api/email',
-      //     { email: process.env.REACT_APP_USER_EMAIL, updateEmail: emailInput },
-      //     {
-      //       headers: {
-      //         // Authorization: `Bearer ${token}`,
-      //         'Content-Type': 'application/json',
-      //       },
-      //     },
-      //   )
-      //   .then((res) => {
-      //     if (res.status === 200) {
-      //       // 로그아웃 처리
-      //     }
-      //   })
-      //   .catch((error) => {
-      //     alert(error);
-      //   });
+      axios
+        .patch(
+          '/api/email',
+          { email: process.env.REACT_APP_USER_EMAIL, updateEmail: emailInput },
+          {
+            headers: {
+              // Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            // 로그아웃 처리
+            alert('이메일 변경 성공!');
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          alert(error);
+        });
     }
   };
 

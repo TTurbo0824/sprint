@@ -94,34 +94,35 @@ function PasswordComponent() {
         )
         .then((res) => {
           if (res.status === 200) {
+            // 로그아웃 진행
             alert('비밀번호가 수정되었습니다.');
             window.location.reload();
-            // 로그아웃 진행
           }
         })
         .catch((error) => {
           // TEST CODE
-          if (curPassword !== userPassword) {
-            setPasswordErr({
-              ...passwordErr,
-              curEqual: false,
-            });
-            console.log('✨👀✨👀✨👀✨👀');
-          } else {
-            setPasswordErr({
-              ...passwordErr,
-              curEqual: true,
-            });
-            alert('비밀번호가 수정되었습니다.');
-            window.location.reload();
-          }
-
-          // if (error.response.data.message === 'password not matching') {
+          // if (curPassword !== userPassword) {
           //   setPasswordErr({
           //     ...passwordErr,
           //     curEqual: false,
           //   });
-          // } else alert(error.response.data.message);
+          //   console.log('✨👀✨👀✨👀✨👀');
+          // } else {
+          //   setPasswordErr({
+          //     ...passwordErr,
+          //     curEqual: true,
+          //   });
+          //   alert('비밀번호가 수정되었습니다.');
+          //   window.location.reload();
+          // }
+
+          if (error.response.data.code === 'EU005') {
+            alert('비밀번호가 일치하지 않습니다.');
+            setPasswordErr({
+              ...passwordErr,
+              curEqual: false,
+            });
+          } else alert(error.response.data.message);
         });
     } else if (curPassword) {
       if (curPassword === userPassword) setPasswordErr({ ...passwordErr, curNotEmpty: true, curEqual: true });
